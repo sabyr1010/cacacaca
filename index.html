@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Рефлексия: RGB және CMYK</title>
+<style>
+:root{color-scheme:light;--bg:#f7f9fc;--card:#ffffff;--tx:#1d2433;--mut:#5b667a;--bd:#dde3ee;--ac:#3b6fe0;--ok:#2e9e5b;--no:#d4453b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:#f7f9fc}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--mut);margin:0 0 16px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
+h2{font-size:1.05rem;margin:0 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+button.opt{flex:1 1 140px;border:2px solid var(--bd);background:#fff;color:var(--tx);border-radius:12px;padding:12px 10px;font-size:.95rem;cursor:pointer;font-family:inherit}
+button.opt.sel{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac) inset}
+button.opt:disabled{cursor:not-allowed;opacity:.6}
+button.opt.sel:disabled{opacity:1}
+.q{margin:0 0 12px}.q label{display:block;font-weight:600;margin-bottom:4px}
+input[type=text],textarea{width:100%;border:1px solid var(--bd);border-radius:10px;padding:10px;font:inherit;background:#fff;color:var(--tx);box-sizing:border-box}
+textarea{min-height:60px;resize:vertical}
+.sit{border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:10px}
+.sit p{margin:0 0 8px}
+.fb{font-size:.9rem;margin-top:8px;min-height:1.2em}
+.good{color:var(--ok)}.bad{color:var(--no)}
+.sl{margin-bottom:12px}.sl div{display:flex;justify-content:space-between;gap:8px}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.total{font-size:1.2rem;font-weight:700;text-align:center;margin-top:8px}
+.main{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--ac);color:#fff;font-size:1rem;cursor:pointer;margin-top:6px;font-family:inherit}
+.main:disabled{background:#9aa6bd;cursor:not-allowed}
+.sw{display:flex;gap:6px;margin:0 0 14px}.sw span{flex:1;height:10px;border-radius:5px}
+.msg{padding:12px;border-radius:12px;background:#eef3ff;border:1px solid #c9d8ff;margin-bottom:14px}
+.msg.err{background:#fff0ee;border-color:#f3c3be}
+.msg.done{background:#eaf7ef;border-color:#bfe3cb}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{flex:1;padding:10px;border:1px solid var(--bd);background:#fff;border-radius:10px;cursor:pointer;font:inherit;color:var(--tx)}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:14px}
+.stat{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:1.3rem}
+details.st{background:#fff;border:1px solid var(--bd);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+details.st summary{cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-weight:600}
+details.st dl{margin:10px 0 0}details.st dt{font-weight:600;font-size:.9rem;margin-top:8px}details.st dd{margin:2px 0 0;color:var(--mut);white-space:pre-wrap}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>🎨 Сабақ рефлексиясы</h1>
+<p class="sub">Тақырып: RGB және CMYK түстік модельдері</p>
+<div class="sw"><span style="background:#e53935"></span><span style="background:#43a047"></span><span style="background:#1e88e5"></span><span style="background:#00bcd4"></span><span style="background:#e91e8c"></span><span style="background:#fdd835"></span><span style="background:#222"></span></div>
+<div id="status"></div>
+<div class="tabs hide" id="tabs"><button id="tabT" class="on">👩‍🏫 Мұғалім беті</button><button id="tabS">📝 Оқушы беті</button></div>
+
+<div id="teacher" class="hide">
+<div class="stats" id="stats"></div>
+<div id="list"></div>
+</div>
+
+<div id="student">
+<section id="intro">
+<h2>Алдымен өзің туралы жаз ✏️</h2>
+<div class="q"><label for="nm">Аты-жөнің</label><input type="text" id="nm" maxlength="60" placeholder="Мысалы: Айдос Серіков"></div>
+<div class="q"><label for="cl">Сыныбың</label><input type="text" id="cl" maxlength="10" placeholder="Мысалы: 7 А"></div>
+<button class="main" id="start">Бастау ▶</button>
+</section>
+
+<div id="form" class="hide">
+<section>
+<h2>1. «Бағдаршам» 🚦</h2>
+<div class="row" data-group="tl">
+<button class="opt" data-v="Қызыл">🔴 Түсінбедім, көмек керек</button>
+<button class="opt" data-v="Сары">🟡 Түсіндім, сұрағым бар</button>
+<button class="opt" data-v="Жасыл">🟢 Толық түсіндім, түсіндіре аламын</button>
+</div>
+</section>
+
+<section>
+<h2>2. Өзіңді тексер: RGB па, CMYK ма? 🧠</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:.9rem">Жауапты бір рет таңдайсың, кейін өзгертуге болмайды.</p>
+<div class="sit" data-ans="RGB"><p>Сайттың баннері экранда көрсетіледі.</p><div class="row"><button class="opt">RGB</button><button class="opt">CMYK</button></div><div class="fb"></div></div>
+<div class="sit" data-ans="CMYK"><p>Мектеп мерейтойына арналған плакат принтерде басылады.</p><div class="row"><button class="opt">RGB</button><button class="opt">CMYK</button></div><div class="fb"></div></div>
+<div class="sit" data-ans="CMYK"><p>Журнал мұқабасы типографияда басылады.</p><div class="row"><button class="opt">RGB</button><button class="opt">CMYK</button></div><div class="fb"></div></div>
+<div class="sit" data-ans="RGB"><p>Телефонға арналған қосымшаның дизайны.</p><div class="row"><button class="opt">RGB</button><button class="opt">CMYK</button></div><div class="fb"></div></div>
+<div class="sit" data-ans="RGB"><p>Монитор үш түсті қосып, ақ түс шығарады (қосынды синтез).</p><div class="row"><button class="opt">RGB</button><button class="opt">CMYK</button></div><div class="fb"></div></div>
+<div class="fb" id="score"></div>
+</section>
+
+<section>
+<h2>3. Сөйлемді жалғастыр ✍️</h2>
+<div class="q"><label>Бүгін мен RGB мен CMYK туралы білдім…</label><textarea class="sent"></textarea></div>
+<div class="q"><label>Маған ең қызықты болғаны…</label><textarea class="sent"></textarea></div>
+<div class="q"><label>Маған қиын болғаны…</label><textarea class="sent"></textarea></div>
+<div class="q"><label>RGB мен CMYK айырмашылығын өз сөзіммен айтсам…</label><textarea class="sent"></textarea></div>
+<div class="q"><label>Келесі жолы мен…</label><textarea class="sent"></textarea></div>
+</section>
+
+<section>
+<h2>4. Көңіл-күйің 😊</h2>
+<div class="row" data-group="mood">
+<button class="opt" data-v="Өте жақсы">😀 Өте жақсы</button>
+<button class="opt" data-v="Жақсы">🙂 Жақсы</button>
+<button class="opt" data-v="Орташа">😐 Орташа</button>
+<button class="opt" data-v="Түсінбедім">😕 Түсінбедім</button>
+</div>
+</section>
+
+<section>
+<h2>5. Өзін-өзі бағалау (1–10) 📊</h2>
+<div class="sl"><div><span>Сабаққа белсенді қатыстым</span><b>5</b></div><input type="range" min="1" max="10" value="5"></div>
+<div class="sl"><div><span>RGB мен CMYK-ті түсіндім</span><b>5</b></div><input type="range" min="1" max="10" value="5"></div>
+<div class="sl"><div><span>Тапсырманы дұрыс орындадым</span><b>5</b></div><input type="range" min="1" max="10" value="5"></div>
+<div class="sl"><div><span>Топта жақсы жұмыс істедім</span><b>5</b></div><input type="range" min="1" max="10" value="5"></div>
+<div class="total" id="total">Жалпы балл: 20 / 40</div>
+</section>
+
+<div class="fb bad" id="err"></div>
+<button class="main" id="send">📨 Мұғалімге жіберу</button>
+</div>
+</div>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var db=null,uid=null,isTeacher=false,sent=false,unsub=null;
+var sits=[].slice.call(document.querySelectorAll('.sit'));
+var sl=[].slice.call(document.querySelectorAll('input[type=range]'));
+var sel={tl:'',mood:''};
+
+function status(txt,cls){var s=$('status');s.textContent='';if(!txt)return;var d=document.createElement('div');d.className='msg '+(cls||'');d.textContent=txt;s.appendChild(d)}
+
+/* single-choice groups */
+[].forEach.call(document.querySelectorAll('[data-group]'),function(g){
+  [].forEach.call(g.querySelectorAll('button'),function(b){
+    b.addEventListener('click',function(){
+      if(sent)return;
+      [].forEach.call(g.querySelectorAll('button'),function(x){x.classList.remove('sel')});
+      b.classList.add('sel');sel[g.dataset.group]=b.dataset.v;
+    });
+  });
+});
+
+/* quiz: one try only */
+function quizScore(){
+  var ok=0,done=0;
+  sits.forEach(function(s){var c=s.querySelector('.sel');if(c){done++;if(c.textContent===s.dataset.ans)ok++}});
+  $('score').textContent=done?('Нәтиже: '+ok+' / '+sits.length):'';
+  return ok;
+}
+sits.forEach(function(s){
+  var bs=[].slice.call(s.querySelectorAll('button'));
+  bs.forEach(function(b){
+    b.addEventListener('click',function(){
+      if(s.querySelector('.sel'))return;
+      b.classList.add('sel');
+      bs.forEach(function(x){x.disabled=true});
+      var fb=s.querySelector('.fb');
+      if(b.textContent===s.dataset.ans){fb.textContent='✅ Дұрыс!';fb.className='fb good'}
+      else{fb.textContent='❌ Қате. Дұрыс жауап: '+s.dataset.ans;fb.className='fb bad'}
+      quizScore();
+    });
+  });
+});
+
+/* self-assessment */
+function total(){var t=0;sl.forEach(function(r){t+=+r.value;r.parentNode.querySelector('b').textContent=r.value});$('total').textContent='Жалпы балл: '+t+' / 40';return t}
+sl.forEach(function(r){r.addEventListener('input',total)});
+
+/* lock the whole form after sending */
+function lockAll(){
+  sent=true;
+  [].forEach.call(document.querySelectorAll('#form button.opt,#form textarea,#form input,#nm,#cl'),function(e){e.disabled=true});
+  $('send').disabled=true;$('send').textContent='✅ Жіберілді';
+}
+function showForm(){$('intro').classList.add('hide');$('form').classList.remove('hide')}
+
+$('start').addEventListener('click',function(){
+  if(!$('nm').value.trim()||!$('cl').value.trim()){status('Алдымен аты-жөніңді және сыныбыңды жаз.','err');return}
+  status('');showForm();window.scrollTo(0,0);
+});
+
+/* sending */
+$('send').addEventListener('click',async function(){
+  $('err').textContent='';
+  if(sent)return;
+  if(!db||!uid){$('err').textContent='Жіберу үшін claude.ai аккаунтына кіру керек.';return}
+  if(!sel.tl){$('err').textContent='1-бөлімде «Бағдаршамды» таңда.';return}
+  if(sits.some(function(s){return !s.querySelector('.sel')})){$('err').textContent='2-бөлімде барлық сұраққа жауап бер.';return}
+  if(!sel.mood){$('err').textContent='4-бөлімде көңіл-күйіңді таңда.';return}
+  var data={
+    name:$('nm').value.trim(),cls:$('cl').value.trim(),
+    tl:sel.tl,mood:sel.mood,
+    quiz:sits.map(function(s){var c=s.querySelector('.sel');return {q:s.querySelector('p').textContent,a:c.textContent,ok:c.textContent===s.dataset.ans}}),
+    score:quizScore(),
+    sentences:[].map.call(document.querySelectorAll('.sent'),function(t){return t.value.trim()}),
+    self:sl.map(function(r){return +r.value}),
+    total:total(),ts:Date.now()
+  };
+  this.disabled=true;
+  try{
+    await db.collection('responses').doc(uid).set(data);
+    lockAll();status('Рахмет! Жауабың мұғалімге жіберілді.','done');window.scrollTo(0,0);
+  }catch(e){
+    this.disabled=false;$('err').textContent='Жіберу мүмкін болмады. Қайталап көр.';
+  }
+});
+
+/* teacher view */
+var TL={'Қызыл':'🔴','Сары':'🟡','Жасыл':'🟢'};
+var SELQ=['Белсенділік','Түсіну','Орындау','Топтық жұмыс'];
+var SENTQ=['Бүгін білдім…','Қызықты болғаны…','Қиын болғаны…','RGB мен CMYK айырмашылығы…','Келесі жолы мен…'];
+function renderTeacher(docs){
+  var rows=docs.map(function(d){return d.data()}).filter(Boolean).sort(function(a,b){return (b.ts||0)-(a.ts||0)});
+  var st=$('stats');st.textContent='';
+  function stat(l,v){var d=document.createElement('div');d.className='stat';var b=document.createElement('b');b.textContent=v;d.appendChild(b);d.appendChild(document.createTextNode(l));st.appendChild(d)}
+  var cnt={'Қызыл':0,'Сары':0,'Жасыл':0},sum=0;
+  rows.forEach(function(r){if(cnt[r.tl]!==undefined)cnt[r.tl]++;sum+=r.total||0});
+  stat('жауап берді',rows.length);stat('🔴 қызыл',cnt['Қызыл']);stat('🟡 сары',cnt['Сары']);stat('🟢 жасыл',cnt['Жасыл']);
+  stat('орташа балл',rows.length?(sum/rows.length).toFixed(1)+' / 40':'—');
+  var list=$('list');list.textContent='';
+  if(!rows.length){var e=document.createElement('div');e.className='msg';e.textContent='Әзірге ешкім жауап жіберген жоқ.';list.appendChild(e);return}
+  rows.forEach(function(r){
+    var det=document.createElement('details');det.className='st';
+    var sm=document.createElement('summary');
+    var l=document.createElement('span');l.textContent=(TL[r.tl]||'')+' '+r.name+' · '+r.cls;
+    var rt=document.createElement('span');rt.textContent='Тест '+r.score+'/5 · Өзін-өзі '+r.total+'/40';
+    sm.appendChild(l);sm.appendChild(rt);det.appendChild(sm);
+    var dl=document.createElement('dl');
+    function add(k,v){var dt=document.createElement('dt');dt.textContent=k;var dd=document.createElement('dd');dd.textContent=v||'—';dl.appendChild(dt);dl.appendChild(dd)}
+    add('Көңіл-күйі',r.mood);
+    (r.quiz||[]).forEach(function(q,i){add('Сұрақ '+(i+1)+': '+q.q,q.a+(q.ok?' ✅':' ❌'))});
+    (r.sentences||[]).forEach(function(t,i){add(SENTQ[i]||'',t)});
+    add('Өзін-өзі бағалау',(r.self||[]).map(function(v,i){return SELQ[i]+': '+v}).join('\n'));
+    det.appendChild(dl);list.appendChild(det);
+  });
+}
+function show(t){
+  $('teacher').classList.toggle('hide',!t);$('student').classList.toggle('hide',t);
+  $('tabT').classList.toggle('on',t);$('tabS').classList.toggle('on',!t);
+}
+$('tabT').addEventListener('click',function(){show(true)});
+$('tabS').addEventListener('click',function(){show(false)});
+
+/* init */
+(async function(){
+  try{
+    var user=await claude.use('user');
+    db=await claude.use('db');
+    if(user){try{uid=await user.id()}catch(e){}isTeacher=await user.canEdit()}
+  }catch(e){}
+  if(!db||!uid){
+    status('Жауап жіберу үшін claude.ai аккаунтына кіріп, сілтемені қайта ашыңыз.','err');
+    return;
+  }
+  if(isTeacher){
+    $('tabs').classList.remove('hide');show(true);
+    try{unsub=db.collection('responses').onSnapshot(function(s){renderTeacher(s.docs)},function(){status('Жауаптарды оқу мүмкін болмады.','err')})}catch(e){}
+    return;
+  }
+  try{
+    var me=await db.collection('responses').doc(uid).get();
+    if(me.exists){
+      var d=me.data();$('nm').value=d.name||'';$('cl').value=d.cls||'';
+      showForm();lockAll();status('Сен жауап жібердің. Рахмет!','done');
+    }
+  }catch(e){}
+})();
+})();
+</script>
+</body>
+</html>
